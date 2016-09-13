@@ -1,0 +1,58 @@
+---
+title: "Bioarchaeology of Umm el-Marra"
+author: "Ernest K. Batey"
+date: "September 13, 2016"
+output:
+  html_document:
+    toc: yes
+  word_document:
+    toc: yes
+bibliography: elmarra-report.bib
+---
+
+# Introduction
+
+In 2006, the author joined the Tell Umm el-Marra Expedition as the field bioarchaeologist. While there, the author collected osteological data on human skeletal remains recovered from the Early-Bronze mortuary complex, as well as several other skeletal assemblages *not* associated with the Early Bronze period and/or recovered from localities outside of the site's acropolis center. All skeletal remains analyzed in 2006 are curated on site, except a number of skeletal and dental samples, now curated by Glenn Schwartz, project co-director.
+
+Barbara Stuart provided initial field descriptions of the human remains, and other preliminary assessments were made by Bruno Frohlich and Judith Littleton of the Smithsonian Institution [@schwartz2007hidden]. The goal was to re-analyze all human remains recovered from the tomb complex in order to investigate a number of topics, including demography, diet, health and paleopathology, possible familial relationships, and lifestyle reconstruction. All data were collected by the author according to protocols outlined in *Standards for Data Collection from Human Skeletal Remains* [@standards1994]. The following report includes a summary of those observations and some results of recent analyses of the data.
+
+# Human Remains from the Early-Bronze Tomb Complex
+
+## Preservation and Demography
+
+Generally, preservation of the sample is fair, although there is differential preservation between and within tombs. Remains from Tombs 1 and 4 exhibit the best overall preservation. Individuals with poor preservation were generally incomplete, highly fragmentary, or the bones had undergone signifi cant taphonomic degradation.
+
+For each tomb, the minimum number of individuals (MNI) was determined by considering repeated skeletal elements and matching commingled remains based upon diagnostic indicators for age and sex, as well as general appearance. In some instances, especially if the remains were highly fragmentary, a large portion of the remains could not be assigned to any particular individual (e.g., Tombs 3 and 7). Human remains recovered from the tomb complex (up to the 2006 field season) represent an MNI of 35 individuals (see Table 1).
+
+## Paleopathology
+
+Due to diff erential preservation, paleopathological data are not reported for nearly one-third of the sample. Also, because of time constraints, paleopathology was not recorded for the individuals from Tomb 8. 
+
+### General Observations
+
+Of those observed, 13/21 individuals exhibit some type of pathological lesion. The most common pathology is periostitis, which is commonly found in archaeological cemetery samples (Ortner 2003). Periostitis occurs in 6/21 of the observable sample and more frequently on the lower limbs, although the upper limbs are also aff ected. Both active and healed lesions were observed. Porotic hyperostosis, another lesion commonly reported in archaeological skeletal samples, is uncommon in the Umm el-Marra sample. Porotic hyperostosis is often considered a result of anemia, although its etiology is likely more complicated (Walker et al. 2009). No cases of porotic hyperostosis on the cranial vault occur; however, cribra orbitalia—porosities on the orbital roof—occur in 2/21 individuals (a young adult and juvenile, see Figure 3).
+
+### Trauma
+
+```{r fig.width=4, fig.height=3, fig.align='center', fig.cap="Mandibular fracture on Individual D, Tomb 4", echo=FALSE}
+library(jpeg)
+library(grid)
+img <- readJPEG("DSCN1179.JPG")
+grid.raster(img)
+```
+
+
+
+# Additional Human Remains
+
+Several individuals recovered in 2006 are not part of the EB tomb complex nor reported here. Th ese include two individuals uncovered while excavating the Northwest Gate area, as well as a few individuals and bone fragments found in some of the Acropolis Center’s upper levels (see Schwartz et al. in press).
+
+## Preservation and Demography
+
+## Paleopathology
+
+
+
+
+
+# References
