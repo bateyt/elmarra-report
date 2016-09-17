@@ -2,12 +2,11 @@
 title: "Bioarchaeology of Umm el-Marra"
 author: "Ernest K. Batey"
 date: "September 13, 2016"
-output:
-  html_document:
-    toc: yes
-  word_document:
-    toc: yes
 bibliography: elmarra-report.bib
+output: 
+  html_document: 
+    fig_caption: yes
+    theme: flatly
 ---
 
 # Introduction
@@ -18,21 +17,21 @@ Barbara Stuart provided initial field descriptions of the human remains, and oth
 
 # Human Remains from the Early-Bronze Tomb Complex
 
-## Preservation and Demography
+# Preservation and Demography
 
 Generally, preservation of the sample is fair, although there is differential preservation between and within tombs. Remains from Tombs 1 and 4 exhibit the best overall preservation. Individuals with poor preservation were generally incomplete, highly fragmentary, or the bones had undergone signifi cant taphonomic degradation.
 
 For each tomb, the minimum number of individuals (MNI) was determined by considering repeated skeletal elements and matching commingled remains based upon diagnostic indicators for age and sex, as well as general appearance. In some instances, especially if the remains were highly fragmentary, a large portion of the remains could not be assigned to any particular individual (e.g., Tombs 3 and 7). Human remains recovered from the tomb complex (up to the 2006 field season) represent an MNI of 35 individuals (see Table 1).
 
-## Paleopathology
+# Paleopathology
 
 Due to diff erential preservation, paleopathological data are not reported for nearly one-third of the sample. Also, because of time constraints, paleopathology was not recorded for the individuals from Tomb 8. 
 
-### General Observations
+# General Observations
 
 Of those observed, 13/21 individuals exhibit some type of pathological lesion. The most common pathology is periostitis, which is commonly found in archaeological cemetery samples (Ortner 2003). Periostitis occurs in 6/21 of the observable sample and more frequently on the lower limbs, although the upper limbs are also aff ected. Both active and healed lesions were observed. Porotic hyperostosis, another lesion commonly reported in archaeological skeletal samples, is uncommon in the Umm el-Marra sample. Porotic hyperostosis is often considered a result of anemia, although its etiology is likely more complicated (Walker et al. 2009). No cases of porotic hyperostosis on the cranial vault occur; however, cribra orbitalia—porosities on the orbital roof—occur in 2/21 individuals (a young adult and juvenile, see Figure 3).
 
-### Trauma
+# Trauma
 
 ```{r fig.width=4, fig.height=3, fig.align='center', fig.cap="Mandibular fracture on Individual D, Tomb 4", echo=FALSE}
 library(jpeg)
@@ -47,9 +46,9 @@ grid.raster(img)
 
 Several individuals recovered in 2006 are not part of the EB tomb complex nor reported here. Th ese include two individuals uncovered while excavating the Northwest Gate area, as well as a few individuals and bone fragments found in some of the Acropolis Center’s upper levels (see Schwartz et al. in press).
 
-## Preservation and Demography
+# Preservation and Demography
 
-## Paleopathology
+# Paleopathology
 
 
 
