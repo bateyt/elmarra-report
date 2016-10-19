@@ -1,7 +1,12 @@
 ---
 title: "Bioarchaeology of Umm el-Marra"
 author: "Ernest K. Batey"
+<<<<<<< HEAD
 date: "September 13, 2016"
+=======
+date: "`r format(Sys.Date(), '%d %B %Y')`"
+bibliography: elmarra-report.bib
+>>>>>>> d49504b95d64574aa75e6f16779eb77e82805074
 output: 
   #tufte::tufte_handout: default
   tufte::tufte_html: default
