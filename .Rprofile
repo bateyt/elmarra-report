@@ -1,0 +1,6 @@
+library(ggplot2)
+library(ggthemes)
+library(ggthemr)
+library(googlesheets)
+library(scales)
+library(dplyr)

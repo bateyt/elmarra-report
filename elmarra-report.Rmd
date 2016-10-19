@@ -2,11 +2,17 @@
 title: "Bioarchaeology of Umm el-Marra"
 author: "Ernest K. Batey"
 date: "September 13, 2016"
-bibliography: elmarra-report.bib
 output: 
-  html_document: 
-    fig_caption: yes
-    theme: flatly
+  #tufte::tufte_handout: default
+  tufte::tufte_html: default
+  tufte::tufte_handout:
+    citation_package: natbib
+    latex_engine: xelatex
+bibliography: elmarra-report.bib
+link-citations: yes
+  # html_document: 
+  #   fig_caption: yes
+  #   theme: united
 ---
 
 # Introduction
@@ -22,6 +28,127 @@ Barbara Stuart provided initial field descriptions of the human remains, and oth
 Generally, preservation of the sample is fair, although there is differential preservation between and within tombs. Remains from Tombs 1 and 4 exhibit the best overall preservation. Individuals with poor preservation were generally incomplete, highly fragmentary, or the bones had undergone signifi cant taphonomic degradation.
 
 For each tomb, the minimum number of individuals (MNI) was determined by considering repeated skeletal elements and matching commingled remains based upon diagnostic indicators for age and sex, as well as general appearance. In some instances, especially if the remains were highly fragmentary, a large portion of the remains could not be assigned to any particular individual (e.g., Tombs 3 and 7). Human remains recovered from the tomb complex (up to the 2006 field season) represent an MNI of 35 individuals (see Table 1).
+
+
+# Dental Nonmetrics
+
+Dental nonmectric data were collected using the UADAS recording system [@scott2000anthteeth]. Population distance was measured using Smith's Mean Measure of Divergence (MMD). @soltysiak2011mmd provides an R script for calculating the MMD.
+
+```{r echo=FALSE, message=FALSE, results='hide'}
+## Read in data
+M_n <- read.csv("https://www.dropbox.com/s/6a2bkv8yw42unlx/nonmetric-dental_obs2.csv?raw=1", header = TRUE)
+M_p <- read.csv("https://www.dropbox.com/s/0cm16evzsbyt5dh/nonmetric-dental_prop2.csv?raw=1", header = TRUE)
+
+## Read in data. The files below include larger set of nonmetric traits
+#M_n <- read.csv("https://www.dropbox.com/s/svynefmmzrdjirz/nonmetric-dental_obs.csv?raw=1", header = TRUE)
+#M_p <- read.csv("https://www.dropbox.com/s/alwnmdawch6afyi/nonmetric-dental_prop.csv?raw=1", header = TRUE)
+
+
+## Anscombe transformation
+theta <- function(n,p) { asin((n/(n+3/4))*(1-2*p)) }
+## Freeman & Tukey transformation
+#theta <- function(n,p) { 0.5*(asin(1-(2*p*n/(n+1)))+asin(1-(2*((p*n)+1)/(n+1)))) }
+
+## Corrections for small sample size
+## Freeman & Tukey correction
+thetadiff <- function(nA,pA,nB,pB) { (theta(nA,pA) - theta(nB,pB))^2 - (1/(nA+0.5) + 1/(nB+0.5)) }
+## Grewal correction
+#thetadiff <- function(nA,pA,nB,pB) { (theta(nA,pA) - theta(nB,pB))^2 - (1/nA + 1/nB) }
+## uncorrected formula
+#thetadiff <- function(nA,pA,nB,pB) { (theta(nA,pA) - theta(nB,pB))^2 }
+
+## -------SECTION C: VARIABLE STATUS-----------
+
+VarMatrix <- M_n[1:2,2:length(M_n[1,])]
+MMDMatrix <- matrix(0,length(M_n[,1]),length(M_n[,1]))
+
+for (a in seq_along(VarMatrix[1,])) {
+for (b in seq_along(MMDMatrix[,1])) {
+for (c in seq_along(MMDMatrix[1,])) {
+## percent frequencies
+#MMDMatrix[b,c] <- thetadiff(M_n[b,a+1], M_p[b,a+1]/100, M_n[c,a+1], M_p[c,a+1]/100)
+## proportions
+MMDMatrix[b,c] <- thetadiff(M_n[b,a+1], M_p[b,a+1], M_n[c,a+1], M_p[c,a+1])
+} }
+
+for (b in seq_along(MMDMatrix[,1])) {
+for (c in seq_along(MMDMatrix[1,])) {
+if (b >= c) { MMDMatrix[b,c] = 0 } } }
+
+VNeg <- 0
+VPos <- 0
+for (b in seq_along(MMDMatrix[,1])) {
+for (c in seq_along(MMDMatrix[1,])) {
+if (MMDMatrix[b,c] > 0) { VPos = VPos + 1 }
+if (MMDMatrix[b,c] < 0) { VNeg = VNeg + 1 } } }
+
+VarMatrix[1,a] = sum(MMDMatrix)
+VarMatrix[2,a] = VPos / (VPos + VNeg) }
+
+VarStatus <- t(VarMatrix)
+
+## --------SECTION D: MMD MATRIX---------------
+MMDMatrix <- matrix(0,length(M_n[,1]),length(M_n[,1]))
+dimnames(MMDMatrix) <- list(M_n[,1], M_n[,1])
+
+for (a in seq_along(MMDMatrix[,1])) {
+for (b in seq_along(MMDMatrix[1,])) {
+MMDVect <- vector("double",length(M_n[1,])-1)
+## percent frequencies
+#for (i in seq_along(MMDVect)) { MMDVect[i] <- thetadiff(M_n[a,i+1], M_p[a,i+1]/100, M_n[b,i+1], M_p[b,i+1]/100) }
+## proportions
+for (i in seq_along(MMDVect)) { MMDVect[i] <- thetadiff(M_n[a,i+1], M_p[a,i+1], M_n[b,i+1], M_p[b,i+1]) }
+MMDMatrix[a,b] <- sum(MMDVect) / length(MMDVect) } }
+
+## forced 0 when a sample is compared to itself
+for (a in seq_along(MMDMatrix[,1])) { MMDMatrix[a,a] = 0 }
+
+## -------------SECTION E: SD MATRIX-------------------------------------------
+
+## standard deviation for MMD, Sjovold's formula
+SDMatrix <- matrix(0,length(M_n[,1]),length(M_n[,1]))
+dimnames(SDMatrix) <- list(M_n[,1], M_n[,1])
+SDDiff <- function(nA,nB) { (1/nA + 1/nB)^2 }
+
+for (a in seq_along(MMDMatrix[,1])) {
+for (b in seq_along(MMDMatrix[1,])) {
+SDVect <- vector("double",length(M_n[1,])-1)
+for (i in seq_along(SDVect)) { SDVect[i] <- SDDiff(M_n[a,i+1], M_n[b,i+1]) }
+SDMatrix[a,b] <- sqrt(sum(SDVect)*2 / length(SDVect)^2) } }
+
+## --------SECTION F: SIGNIFICANCE MATRIX---------------
+
+## statistical significance
+SigMatrix <- matrix(1,length(M_n[,1]),length(M_n[,1]))
+dimnames(SigMatrix) <- list(M_n[,1], M_n[,1])
+
+for (a in seq_along(MMDMatrix[,1])) {
+for (b in seq_along(MMDMatrix[1,])) {
+
+dist <- MMDMatrix[a,b] / SDMatrix[a,b]
+SigMatrix[a,b] = round((1-pnorm(dist))*2, digits = 8)
+if (MMDMatrix[a,b] < 0) SigMatrix[a,b] = 1
+} }
+
+## ---------SECTION G: OUTPUT-------------
+
+#VarStatus
+write.csv(VarStatus, file="output_vars.csv")
+
+#MMDMatrix
+write.csv(MMDMatrix, file="output_mmd.csv")
+
+#SDMatrix
+write.csv(SDMatrix, file="output_mmd-sd.csv")
+
+#SigMatrix
+write.csv(SigMatrix, file="output_mmd-p.csv")
+
+```
+
+```{r, echo=FALSE}
+knitr::kable(MMDMatrix, caption = 'MMD Matrix for Umm el-Marra and Comparative Samples')
+```
 
 # Paleopathology
 
